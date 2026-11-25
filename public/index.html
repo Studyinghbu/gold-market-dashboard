@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101514"><meta name="description" content="查看国内外黄金、布伦特原油与美国实际利率的日周月走势。">
+<title>黄金行情看板</title><link rel="icon" href="./gold.ico"><link rel="stylesheet" href="./board.css">
+</head><body>
+<header><div class="bar wrap"><a class="brand" href="#market"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span>黄金行情看板</a>
+<nav aria-label="主导航"><a href="#market">行情总览</a><a href="#relation">历史关系</a><button id="sources">数据来源</button></nav></div></header>
+<main class="wrap">
+<section id="market"><div class="section-head"><div><h1>市场行情</h1><p id="status" role="status">正在读取行情…</p></div>
+<div class="tools"><div class="periods" aria-label="走势周期"><button data-days="1" aria-pressed="true">一日</button><button data-days="7" aria-pressed="false">一周</button><button data-days="30" aria-pressed="false">一月</button></div><button id="refresh"><span aria-hidden="true">⟳</span> 刷新</button></div></div>
+<div id="cards" class="cards" aria-label="选择图表品种"></div>
+<div class="detail"><article class="chart-panel"><div class="chart-heading"><div><span id="code" class="eyebrow"></span><h2 id="chart-title">价格走势</h2></div><span id="unit" class="unit"></span></div>
+<div class="plot" id="plot" tabindex="0" role="img" aria-label="走势图，可用左右方向键查看数据"><canvas></canvas><output id="hover" hidden></output><span id="empty" hidden>该时段数据暂缺</span></div>
+<div class="chart-foot"><span id="series-label">北京时间</span><span id="asof"></span></div></article>
+<aside><h2>区间数据</h2><div id="range"></div><div class="source-note"><span>行情来源</span><a id="origin" target="_blank" rel="noopener"></a></div></aside></div></section>
+<section id="relation"><div class="model-head"><h2><span class="fx">ƒ</span> 金价与油价、实际利率的关系</h2><span class="unit">日度回归</span></div>
+<p id="formula">等待历史数据</p><p id="model-units">金价取国际现货。金价和布油涨跌幅按百分数输入，10 年期实际利率每上升 10 个基点，利率项输入 1。</p>
+<div class="model-stats" id="fit"></div></section>
+</main>
+<dialog id="source-dialog"><div class="dialog-title"><h2>数据来源</h2><button id="close-dialog" aria-label="关闭">×</button></div>
+<p>报价时间为北京时间。美债实际利率按美国观测日显示。</p>
+<ul><li><a href="https://quote.cngold.org/gjs/gjhj_xhhj.html" target="_blank" rel="noopener">国际现货黄金 · 金投网</a></li>
+<li><a href="https://quote.cngold.org/gjs/jjs_hj9999.html" target="_blank" rel="noopener">上金所 Au99.99 · 金投网</a></li>
+<li><a href="https://m.cngold.org/quote/oil/gjyy_bltyy.html" target="_blank" rel="noopener">布伦特原油连续合约 · 金投网</a></li>
+<li><a href="https://fred.stlouisfed.org/series/DFII10" target="_blank" rel="noopener">10 年期 TIPS · FRED</a> / <a href="https://www.federalreserve.gov/releases/h15/" target="_blank" rel="noopener">美联储 H.15</a></li>
+<li><a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates" target="_blank" rel="noopener">实际利率历史曲线 · 美国财政部</a></li></ul>
+<p>一周和一月分别回溯 7 天和 30 天，起点遇休市时采用此前最近的有效收盘价。日内图保留休市空档。</p></dialog>
+<script type="module" src="./board.js"></script>
+</body></html>

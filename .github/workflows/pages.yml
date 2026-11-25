@@ -1,0 +1,42 @@
+name: Update market dashboard
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '2-59/5 * * * *'
+
+concurrency:
+  group: market-pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - id: site
+        uses: actions/configure-pages@v5
+      - name: Collect prices and history
+        run: node scripts/collect.mjs
+        env:
+          PAGES_URL: ${{ steps.site.outputs.base_url }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+          retention-days: 1
+      - id: deployment
+        uses: actions/deploy-pages@v4
